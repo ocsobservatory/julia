@@ -847,4 +847,17 @@ end
     end
 end
 
+@testset "inverse of Adjoint" begin
+    A = randn(n, n)
+
+    @test inv(A')*A'                     ≈ I
+    @test inv(transpose(A))*transpose(A) ≈ I
+
+    B = complex.(A, randn(n, n))
+    B = B + transpose(B)
+
+    @test_broken inv(B')*B'                     ≈ I
+    @test_broken inv(transpose(B))*transpose(B) ≈ I
+end
+
 end # module TestDense
